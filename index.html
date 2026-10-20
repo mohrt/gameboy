@@ -1,0 +1,156 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <meta name="theme-color" content="#111111" />
+    <title>Game Boy</title>
+    <link rel="stylesheet" href="/src/style.css" />
+  </head>
+  <body>
+    <main>
+      <div class="screen-frame">
+        <canvas id="screen" width="160" height="144" tabindex="0" aria-label="Game Boy screen"></canvas>
+        <p class="paused-label">Paused</p>
+        <p class="fast-label">Fast forward</p>
+        <p class="empty-label">Insert a cartridge to switch on</p>
+      </div>
+
+      <section id="toolbar" class="toolbar" aria-label="Console">
+        <span class="toolbar-group">
+          <button type="button" data-action="pause" title="P or the Pause key">Pause</button>
+          <button type="button" data-action="power" title="Switch the console off and on again">Power cycle</button>
+          <button type="button" data-action="fullscreen" title="Esc leaves full screen">Full screen</button>
+        </span>
+        <span class="toolbar-group">
+          <select
+            name="model"
+            aria-label="Console"
+            title="Auto runs games made for the Game Boy Color on one, and the rest on the original Game Boy"
+          >
+            <option value="auto" selected>Console: Auto</option>
+            <option value="dmg">Game Boy</option>
+            <option value="cgb">Game Boy Color</option>
+          </select>
+          <select name="palette" aria-label="Screen colours" title="How the original Game Boy's four shades look">
+            <option value="green">Screen: Green (Game Boy)</option>
+            <option value="pocket" selected>Screen: Grey (Game Boy Pocket)</option>
+            <option value="color">Screen: Colour (as a Game Boy Color shows it)</option>
+          </select>
+        </span>
+        <span class="toolbar-group">
+          <button type="button" data-action="save-state" title="Save the whole console, to come back to later">
+            Save state
+          </button>
+          <select name="state-slot" aria-label="Save states"></select>
+          <button type="button" data-action="load-state">Load</button>
+          <button type="button" data-action="delete-state">Delete</button>
+          <button type="button" data-action="export-state" title="Download the current state as a file">Export</button>
+          <button type="button" data-action="import-state">Import...</button>
+        </span>
+        <span class="toolbar-message" role="status"></span>
+        <input type="file" name="state-file" accept=".gbstate" hidden />
+      </section>
+
+      <section id="cart-panel" class="cart-panel" data-state="empty" aria-label="Cartridge slot">
+        <div class="cart-empty">
+          <p class="cart-title">Drop a .gb, .gbc or .zip cartridge image here</p>
+          <button type="button" data-action="choose">Choose file...</button>
+        </div>
+        <div class="cart-loaded">
+          <p class="cart-title"><span class="cart-name"></span> <span class="cart-file"></span></p>
+          <p class="cart-details"></p>
+          <div class="cart-actions">
+            <button type="button" data-action="choose">Change cartridge</button>
+            <button type="button" data-action="eject">Eject</button>
+            <span class="battery-actions" hidden>
+              <button type="button" data-action="export-save" title="The game's own save (its battery-backed RAM)">
+                Download .sav
+              </button>
+              <span class="battery-hint">or drop a .sav file to use one</span>
+            </span>
+          </div>
+        </div>
+        <p class="zip-files" hidden>In this zip: <span class="zip-buttons"></span></p>
+        <div class="bundled-games" hidden>
+          <p class="bundled-games-row">
+            Free games:
+            <select name="bundled-game" aria-label="Free games"></select>
+            <button type="button" data-action="play-game">Play</button>
+          </p>
+          <p class="game-info"></p>
+        </div>
+        <p class="boot-rom-row">
+          <label title="Start through the console's own boot ROM, as the real one does: it shows the Nintendo logo first">
+            <input type="checkbox" name="use-boot-rom" checked /> Start through the boot ROM
+          </label>
+          <span class="boot-rom-status">No boot ROM</span>
+          <button
+            type="button"
+            data-action="choose-boot-rom"
+            title="Your own Game Boy (256 bytes) or Game Boy Color (2304 bytes) boot ROM"
+          >
+            Add boot ROM...
+          </button>
+          <button type="button" data-action="forget-boot-roms" hidden>Forget</button>
+        </p>
+        <p class="cart-drop-hint">Release to insert</p>
+        <p class="cart-message" role="status"></p>
+        <input type="file" name="cart-file" accept=".gb,.gbc,.cgb,.sgb,.bin,.zip,.gbstate,.sav,.srm" hidden />
+        <input type="file" name="boot-rom-file" accept=".bin,.rom,.gb,.gbc,.zip" hidden />
+      </section>
+
+      <section id="controls" class="controls" aria-label="Controls">
+        <div class="controls-row">
+          <label><input type="checkbox" name="show-pad" /> On-screen controller</label>
+          <label><input type="checkbox" name="sound" checked /> Sound</label>
+          <label>
+            Volume
+            <input type="range" name="volume" min="0" max="1" step="0.05" value="0.8" />
+          </label>
+          <span class="sound-hint" hidden>Click or press a key to start sound</span>
+        </div>
+        <div id="pad" class="pad" hidden>
+          <div class="pad-top">
+            <div class="pad-dpad" role="group" aria-label="D-pad"></div>
+            <div class="pad-face">
+              <button type="button" data-button="B">B</button>
+              <button type="button" data-button="A">A</button>
+            </div>
+          </div>
+          <div class="pad-middle">
+            <button type="button" data-button="Select">Select</button>
+            <button type="button" data-button="Start">Start</button>
+          </div>
+        </div>
+        <p class="gamepad-status" aria-live="polite"></p>
+        <p class="controls-hint">
+          Keyboard: arrow keys for the D-pad, X for A, Z for B, Enter for Start and Shift for Select. Hold Tab or Space
+          to fast-forward. Gamepads work as soon as you press a button: the bottom and left face buttons are B, the right
+          and top ones A, and the shoulder buttons fast-forward.
+        </p>
+      </section>
+
+      <p id="status">Starting...</p>
+      <nav class="emulator-links" aria-label="Emulators">
+        Emulators:
+        <a href="https://mohrt.github.io/sz81/">Timex Sinclair 1000</a>
+        <a href="https://mohrt.github.io/c64/">Commodore 64</a>
+        <a href="https://mohrt.github.io/amiga500/">Amiga 500</a>
+        <a href="https://mohrt.github.io/atari2600/">Atari 2600</a>
+        <a href="https://mohrt.github.io/intellivision/">Intellivision</a>
+        <a href="https://mohrt.github.io/colecovision/">ColecoVision</a>
+        <a href="https://mohrt.github.io/nes/">NES</a>
+        <a href="https://mohrt.github.io/mastersystem/">Sega Master System</a>
+        <a href="https://mohrt.github.io/genesis/">Sega Genesis</a>
+        <strong aria-current="page">Game Boy</strong>
+      </nav>
+      <footer class="site-links">
+        <a href="https://mohrt.com/">mohrt.com</a>
+        <a href="https://github.com/mohrt/gameboy" target="_blank" rel="noopener">Source on GitHub</a>
+        <a href="https://x.com/mohrt" target="_blank" rel="noopener">@mohrt on X</a>
+      </footer>
+    </main>
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>

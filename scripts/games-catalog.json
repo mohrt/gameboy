@@ -1,0 +1,81 @@
+{
+  "games": [
+    {
+      "title": "µCity (Game Boy Color)",
+      "file": "ucity.gbc",
+      "url": "https://github.com/AntonioND/ucity/releases/download/v1.3/ucity.gbc",
+      "sha256": "9422ee2ca7b7ea1d46b58b2a429fff3f354dfd3e732dee1e7ae6220f148ce6e0",
+      "credit": "Antonio Niño Díaz",
+      "license": "GNU GPL v3 or later (art and music CC BY-SA 4.0)",
+      "licenseFile": "https://raw.githubusercontent.com/AntonioND/ucity/71fb08e7ca53fe4228e66316968d9c6bea3439ba/gpl-3.0.txt",
+      "sourceUrl": "https://github.com/AntonioND/ucity",
+      "hint": "Build a city: zone land, lay roads and power lines, and watch it grow. It saves up to 16 cities."
+    },
+    {
+      "title": "Libbet and the Magic Floor",
+      "file": "libbet.gb",
+      "url": "https://github.com/pinobatch/libbet/releases/download/v0.08/libbet.gb",
+      "sha256": "3607412031c8287cf878299ce96e581e85b852dde703806343b95576fa3ff1a9",
+      "credit": "Damian Yerrick, after Martin Korth's Magic Floor",
+      "license": "zlib",
+      "licenseFile": "https://raw.githubusercontent.com/pinobatch/libbet/1232e71dc1ac852786ad9825316e19d2b341bc4a/LICENSE",
+      "sourceUrl": "https://github.com/pinobatch/libbet",
+      "hint": "A puzzle: roll across the floor's shades, leaving tracks on 90% of it, and reach the exit. A with the D-pad jumps."
+    },
+    {
+      "title": "2048",
+      "file": "2048.gb",
+      "url": "https://github.com/wyattferguson/2048-gb/releases/download/v1.1/2048.gb",
+      "sha256": "b8b0ab5dc8159dcd83680a2796010ecf9fc8c94c2cfb9cd3ff30c1998d790aa5",
+      "credit": "Wyatt Ferguson",
+      "license": "MIT",
+      "licenseFile": "https://raw.githubusercontent.com/wyattferguson/2048-gb/167788105db659f2049dd2d537ee12f63d87b1e7/LICENSE",
+      "sourceUrl": "https://github.com/wyattferguson/2048-gb",
+      "hint": "Slide the tiles with the D-pad to merge matching numbers. Select starts the board again."
+    },
+    {
+      "title": "Dino Boy",
+      "file": "dinoboy.gb",
+      "url": "https://github.com/rnegron/dino-gb/releases/download/Public/dinoboy.gb",
+      "sha256": "a2cb9c9d5d1ddace7fc345131e21551b3fe4c04cec3307e36aab91a5a9f03cfb",
+      "credit": "Raúl Negrón-Otero, after Chrome's dinosaur game",
+      "license": "MIT",
+      "licenseFile": "https://raw.githubusercontent.com/rnegron/dino-gb/17fa39e11bc0116be47e731ceb1a7a3c52053be3/LICENSE",
+      "sourceUrl": "https://github.com/rnegron/dino-gb",
+      "hint": "Run and jump the cacti with A, as in the browser's offline game."
+    },
+    {
+      "title": "Undercooked",
+      "file": "undercooked.gb",
+      "url": "https://github.com/qguv/undercooked/releases/download/v0.0.6/undercooked_0.0.6.gb",
+      "sha256": "2226c801ab53739b874ce22acca2173c8987961d1c64e45acc1a9a38e1a3bee6",
+      "credit": "Quint Guvernator (code and music) and Rachel (art)",
+      "license": "GNU GPL v3",
+      "licenseFile": "https://raw.githubusercontent.com/qguv/undercooked/98529e1f7edb701a3862c92fe9fdbf10cb2da041/LICENSE",
+      "sourceUrl": "https://github.com/qguv/undercooked",
+      "hint": "A cooking game, still being made: walk around the kitchen with the D-pad."
+    },
+    {
+      "title": "Patrick's Pocket Challenge",
+      "file": "patrick.gb",
+      "url": "https://github.com/tobiasvl/pocket-patrick/releases/download/v1.1/patrick.gb",
+      "sha256": "12311025217904b6a69068062519595e487945199e6260e0aa29328e80cc5655",
+      "credit": "Tobias V. I. Langhoff",
+      "license": "MIT",
+      "licenseFile": "https://raw.githubusercontent.com/tobiasvl/pocket-patrick/16f3a45fa41cedce77cfc149cb3b61b5e9285c42/LICENSE.md",
+      "sourceUrl": "https://github.com/tobiasvl/pocket-patrick",
+      "hint": "Remove all 28 squares: the D-pad picks a square, A moves Patrick there, and B deals a new board."
+    },
+    {
+      "title": "AIRPLANZ",
+      "file": "airplanz.gb",
+      "url": "https://github.com/NotImplementedLife/AIRPLANZ/releases/download/1.2/AIRPLANZ_1_2.gb",
+      "sha256": "5cdc8d6d3fffe403083df240208082ba0b8d7390a4b8fa93f955904094b8d1ef",
+      "credit": "NotImplementedLife",
+      "license": "GNU GPL v3",
+      "licenseFile": "https://raw.githubusercontent.com/NotImplementedLife/AIRPLANZ/9ed9843750a2b1ee8b160fc17ebe16c6e51435f0/LICENSE",
+      "sourceUrl": "https://github.com/NotImplementedLife/AIRPLANZ",
+      "hint": "Battleship with airplanes, for two players passing the Game Boy: Select turns a plane, Start confirms, A fires."
+    }
+  ]
+}
