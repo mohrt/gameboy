@@ -1,3 +1,4 @@
+import { trackGameLoaded } from './analytics';
 import { AudioOutput } from './audio/audio-output';
 import { Cartridge } from './cart/cartridge';
 import { MBC_NAMES, colorSupport, readHeader, type CartridgeInfo } from './cart/header';
@@ -299,6 +300,7 @@ async function main(): Promise<void> {
         }
         const game = bundledGames.find((entry) => entry.file.split('/').pop() === chosen.name);
         await insertImage(media.image, fileName, game?.title);
+        trackGameLoaded('gameboy', game?.title);
       },
       onGame: (index) => fetchGame(import.meta.env.BASE_URL, bundledGames[index]),
       onEject: eject,
