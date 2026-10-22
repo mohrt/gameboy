@@ -76,6 +76,83 @@
       "licenseFile": "https://raw.githubusercontent.com/NotImplementedLife/AIRPLANZ/9ed9843750a2b1ee8b160fc17ebe16c6e51435f0/LICENSE",
       "sourceUrl": "https://github.com/NotImplementedLife/AIRPLANZ",
       "hint": "Battleship with airplanes, for two players passing the Game Boy: Select turns a plane, Start confirms, A fires."
+    },
+    {
+      "title": "Rhythm Land",
+      "file": "rhythm-land.gb",
+      "url": "https://github.com/sinusoid-studios/rhythm-land/releases/download/v1.0.1/rhythm-land.gb",
+      "sha256": "820b4e543bc1afb80b66be81aca64f429e97c8c0f4b5377350353788381ab160",
+      "credit": "martendo (code and music) and Adrian-kwok (art)",
+      "license": "MIT (with a few routines under zlib and GNU GPL v3, listed in ATTRIBUTION.md)",
+      "licenseFile": "https://raw.githubusercontent.com/sinusoid-studios/rhythm-land/e00d434e66803f26c26fb334d90c1eb12b6d9082/LICENSE",
+      "sourceUrl": "https://github.com/sinusoid-studios/rhythm-land",
+      "hint": "Rhythm minigames in the style of Rhythm Heaven: press the buttons on the beat of the music."
+    },
+    {
+      "title": "GB Corp.",
+      "file": "gbcorp.gb",
+      "url": "https://github.com/drludos/GBcorp/releases/download/1.0/gbcorp.gb",
+      "sha256": "5a39926a23ff50448859b2d924d8bba5a8c68db91563783f0c593a3aa8e7bad3",
+      "credit": "Dr. Ludos (link-cable mode by bbbbbr)",
+      "license": "MIT",
+      "licenseFile": "https://raw.githubusercontent.com/drludos/GBcorp/21d437258bfe361c8834f230aa4e69e008ba7ed9/LICENSE",
+      "sourceUrl": "https://github.com/drludos/GBcorp",
+      "hint": "Run a company of Game Boys that only work on their own model: the D-pad picks one, A changes its batteries, B levels it up, Select fires it."
+    },
+    {
+      "title": "CrossConnect",
+      "file": "crossconnect.gbc",
+      "url": "https://github.com/QuinnPainter/CrossConnect/releases/download/1.0/CrossConnect.gbc",
+      "sha256": "5465e7b4aa37ee0d630d2e63a026f282e8d17c213a2bd9f087417e68061e8b95",
+      "credit": "Quinn Painter",
+      "license": "MIT",
+      "licenseFile": "https://raw.githubusercontent.com/QuinnPainter/CrossConnect/7813ec4efc329381b94f93fe0ca526053f62c16f/LICENSE",
+      "sourceUrl": "https://github.com/QuinnPainter/CrossConnect",
+      "hint": "Numberlink: join each matching pair and fill the whole grid. Hold A on a node and move to draw a line; B erases."
+    },
+    {
+      "title": "Time // Beat",
+      "file": "timebeat.gb",
+      "url": "https://github.com/carlossss111/TimeBeat/releases/download/1.1/beatmap.gb",
+      "sha256": "b1cab92119472c774f099fe50e7885187da62a3bdc724978b74a425d170d8eb4",
+      "credit": "Daniel Robinson (code) and Jonathan Mason (music)",
+      "license": "BSD 3-Clause",
+      "licenseFile": "https://raw.githubusercontent.com/carlossss111/TimeBeat/ed1a57b3d52237c242daf5b448da6eac149c5c95/LICENSE",
+      "sourceUrl": "https://github.com/carlossss111/TimeBeat",
+      "hint": "A rhythm game: press the buttons shown as they reach the bottom of the screen. Up and Down pick a stage, Left and Right adjust the audio offset."
+    },
+    {
+      "title": "SnakeBoy",
+      "file": "snakeboy.gb",
+      "url": "https://github.com/sebb01/SnakeBoy/releases/download/v1.2.1/SnakeBoy.gb",
+      "sha256": "d1d06310323dfd842dee7a304961cd47d5da58127dc65662b6697e0572a0b39c",
+      "credit": "Sebb",
+      "license": "GNU GPL v2",
+      "licenseFile": "https://raw.githubusercontent.com/sebb01/SnakeBoy/a9579e48fda636ff32b9cf6ef81547601916ff83/LICENSE",
+      "sourceUrl": "https://github.com/sebb01/SnakeBoy",
+      "hint": "Classic Snake: steer with the D-pad and eat to grow. Start starts and pauses."
+    },
+    {
+      "title": "Flooder (Game Boy Color)",
+      "file": "flooder.gb",
+      "url": "https://raw.githubusercontent.com/Obalfour/Flooder/29991e4306e6b8da4d7750f9818d2c30dcf8b78a/rom/flooder.gb",
+      "sha256": "2b93dd9e623678e1c5c33b942a9a5621529d9073be854b32c9f59af8b70b5292",
+      "credit": "Obalfour",
+      "license": "MIT",
+      "licenseFile": "https://raw.githubusercontent.com/Obalfour/Flooder/29991e4306e6b8da4d7750f9818d2c30dcf8b78a/LICENSE",
+      "sourceUrl": "https://github.com/Obalfour/Flooder",
+      "hint": "Flood the board from the top-left corner in 25 moves: the D-pad picks a colour and A pours it."
+    },
+    {
+      "title": "Minesweeper",
+      "file": "minesweeper.gb",
+      "url": "https://raw.githubusercontent.com/danirod-live/minesweeper-gb/f5b768b1af35860a50bf4e0e54c02a4c4aae82dc/html/minesweeper.gb",
+      "sha256": "ec7f30edb902f5b78553c4eba610ec8fd85f5a43138d584715d068a7888d8220",
+      "credit": "Dani Rodríguez (danirod)",
+      "license": "GNU GPL v3",
+      "licenseFile": "https://raw.githubusercontent.com/danirod-live/minesweeper-gb/f5b768b1af35860a50bf4e0e54c02a4c4aae82dc/COPYING",
+      "sourceUrl": "https://github.com/danirod-live/minesweeper-gb",
+      "hint": "Clear the field without hitting a mine: the D-pad moves, A uncovers a square, B plants a flag."
     }
   ]
 }
