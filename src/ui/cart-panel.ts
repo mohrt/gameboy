@@ -14,9 +14,6 @@ export interface CartPanelCallbacks {
   onGame(index: number): Promise<File>;
   onEject(): void;
   onExportSave(): void;
-  /** A boot ROM was chosen (or a zip with one in). */
-  onBootRomFile(file: File): Promise<void>;
-  onForgetBootRoms(): Promise<void>;
   focusScreen(): void;
 }
 
@@ -26,7 +23,7 @@ function requireChild<T extends Element>(root: Element, selector: string): T {
   return element;
 }
 
-/** The cartridge slot: drop or choose files, pick free games, get at the game's battery save, and keep boot ROMs. */
+/** The cartridge slot: drop or choose files, pick free games, and get at the game's battery save. */
 export class CartPanel {
   private readonly fileInput: HTMLInputElement;
   private readonly message: HTMLElement;
@@ -68,16 +65,6 @@ export class CartPanel {
     requireChild<HTMLButtonElement>(root, '[data-action="export-save"]').addEventListener('click', () => {
       this.callbacks.onExportSave();
       this.callbacks.focusScreen();
-    });
-    const bootRomInput = requireChild<HTMLInputElement>(root, 'input[name="boot-rom-file"]');
-    requireChild<HTMLButtonElement>(root, '[data-action="choose-boot-rom"]').addEventListener('click', () => bootRomInput.click());
-    bootRomInput.addEventListener('change', () => {
-      const file = bootRomInput.files?.[0];
-      bootRomInput.value = '';
-      if (file) this.run(() => this.callbacks.onBootRomFile(file));
-    });
-    requireChild<HTMLButtonElement>(root, '[data-action="forget-boot-roms"]').addEventListener('click', () => {
-      if (confirm('Forget the boot ROMs? Games will start straight away again.')) this.run(() => this.callbacks.onForgetBootRoms());
     });
     this.attachDragAndDrop();
   }
@@ -127,13 +114,6 @@ export class CartPanel {
     requireChild(this.root, '.cart-file').textContent = fileLabel === title ? '' : `(${fileLabel})`;
     requireChild(this.root, '.cart-details').textContent = details;
     requireChild<HTMLElement>(this.root, '.battery-actions').hidden = !hasBattery;
-  }
-
-  /** Shows which boot ROMs are kept (e.g. "Game Boy boot ROM"), or that there are none. */
-  showBootRoms(description: string | null): void {
-    requireChild(this.root, '.boot-rom-status').textContent = description ?? 'No boot ROM: games start straight away';
-    requireChild<HTMLButtonElement>(this.root, '[data-action="forget-boot-roms"]').hidden = description === null;
-    requireChild<HTMLInputElement>(this.root, 'input[name="use-boot-rom"]').disabled = description === null;
   }
 
   showEmpty(): void {

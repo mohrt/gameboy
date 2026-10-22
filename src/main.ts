@@ -13,6 +13,7 @@ import { BatterySaves, batteryKey } from './storage/battery-saves';
 import { BOOT_ROM_NAMES, BootRomStore, bootRomModel, looksLikeBootRom } from './storage/boot-rom-store';
 import { SaveStates, decodeSession, encodeSession, type SaveStateRecord, type Session } from './storage/save-states';
 import { memoryStores, openBrowserStores, type KeyValueStore } from './storage/store';
+import { BootRomSetup } from './ui/boot-rom-setup';
 import { CartPanel } from './ui/cart-panel';
 import { downloadFile } from './ui/download';
 import { Settings } from './ui/settings';
@@ -87,6 +88,8 @@ async function main(): Promise<void> {
 
     const stores = await openBrowserStores().catch((error: unknown) => {
       console.warn('Browser storage is unavailable; saves will last until the page is closed.', error);
+      requireElement<HTMLElement>('.boot-rom-storage-note').textContent =
+        "This browser isn't letting the page store files, so boot ROMs will be forgotten when you close it.";
       return memoryStores();
     });
     const saveStates = new SaveStates(stores.saveStates as KeyValueStore<SaveStateRecord>);
@@ -137,28 +140,36 @@ async function main(): Promise<void> {
 
     // --- Boot ROMs ---------------------------------------------------------------------
     const useBootRom = requireElement<HTMLInputElement>('input[name="use-boot-rom"]');
-    const describeBootRoms = (): string | null => {
-      const kept = (Object.keys(BOOT_ROM_NAMES) as Model[]).filter((model) => bootRoms[model]);
-      return kept.length ? kept.map((model) => BOOT_ROM_NAMES[model]).join(' and ') : null;
-    };
+    /** The files the boot ROMs given on this visit came from. */
+    let bootRomFiles: Partial<Record<Model, string>> = {};
     const applyBootRoms = () => {
       machine.bootRoms = useBootRom.checked ? bootRoms : {};
-      cartPanel.showBootRoms(describeBootRoms());
+      bootRomSetup.showBootRoms(bootRoms, bootRomFiles);
     };
     useBootRom.addEventListener('change', () => {
       applyBootRoms();
       powerCycle();
       focusScreen();
     });
-    const useBootRomImage = async (bytes: Uint8Array) => {
+    /** Keeps a boot ROM and switches the console off and on to use it; resolves to a message saying so. */
+    const useBootRomImage = async (bytes: Uint8Array, fileName: string): Promise<string> => {
       const model = bootRomModel(bytes);
       await bootRomStore.save(model, bytes);
       bootRoms = { ...bootRoms, [model]: bytes };
+      bootRomFiles = { ...bootRomFiles, [model]: fileName };
       useBootRom.checked = true;
       useBootRom.dispatchEvent(new Event('change'));
-      cartPanel.showMessage(`${BOOT_ROM_NAMES[model]} kept in this browser; the console was switched off and on to use it.`, true);
+      return `${BOOT_ROM_NAMES[model]} kept in this browser; the console was switched off and on to use it.`;
     };
     const isBootRomSize = (length: number) => Object.values(BOOT_ROM_SIZES).includes(length);
+    /** Shows the boot ROM setup in place of the (paused) screen until the player goes back. */
+    const openBootRomSetup = async () => {
+      if (bootRomSetup.isOpen) return;
+      audio?.flush();
+      await bootRomSetup.open();
+      emulator.resetTiming();
+      focusScreen();
+    };
 
     // --- Battery saves ---------------------------------------------------------------
     const saveBattery = async () => {
@@ -271,8 +282,9 @@ async function main(): Promise<void> {
         if (fromZip) cartPanel.setZipFiles(files, chosen.name);
         else if (cartPanel.zipContents.includes(file)) cartPanel.setZipFiles(cartPanel.zipContents, file.name);
         else cartPanel.setZipFiles([], null);
+        const fileName = fromZip ? `${chosen.name} from ${file.name}` : chosen.name;
         if (isBootRomSize(chosen.size) || (looksLikeBootRom(chosen.name) && chosen.size < 0x1000)) {
-          await useBootRomImage(new Uint8Array(await chosen.arrayBuffer()));
+          cartPanel.showMessage(await useBootRomImage(new Uint8Array(await chosen.arrayBuffer()), fileName), true);
           return;
         }
         const media = await readMedia(chosen);
@@ -286,7 +298,7 @@ async function main(): Promise<void> {
           return;
         }
         const game = bundledGames.find((entry) => entry.file.split('/').pop() === chosen.name);
-        await insertImage(media.image, fromZip ? `${chosen.name} from ${file.name}` : chosen.name, game?.title);
+        await insertImage(media.image, fileName, game?.title);
       },
       onGame: (index) => fetchGame(import.meta.env.BASE_URL, bundledGames[index]),
       onEject: eject,
@@ -294,17 +306,22 @@ async function main(): Promise<void> {
         const data = current?.cartridge.saveData;
         if (current && data) downloadFile(data, `${slug(current.title)}${BATTERY_EXTENSION}`);
       },
-      onBootRomFile: async (file) => {
+      focusScreen,
+    });
+
+    const bootRomSetup = new BootRomSetup(requireElement('#boot-rom-setup'), {
+      onFile: async (file) => {
         const [chosen] = await filesFrom(file);
-        await useBootRomImage(new Uint8Array(await chosen.arrayBuffer()));
+        const fileName = chosen === file ? file.name : `${chosen.name} from ${file.name}`;
+        return useBootRomImage(new Uint8Array(await chosen.arrayBuffer()), fileName);
       },
-      onForgetBootRoms: async () => {
+      onForget: async () => {
         await bootRomStore.forget();
         bootRoms = {};
+        bootRomFiles = {};
         applyBootRoms();
         powerCycle();
       },
-      focusScreen,
     });
 
     const refreshStates = async () => toolbar.setStates(await saveStates.list());
@@ -421,13 +438,14 @@ async function main(): Promise<void> {
       const elapsed = Math.min(now - last, MAX_FRAME_MS);
       last = now;
       pollGamepads();
-      const fast = (keyboardFast || gamepadFast) && !paused;
+      const running = !paused && !bootRomSetup.isOpen;
+      const fast = (keyboardFast || gamepadFast) && running;
       if (fast !== wasFast) {
         wasFast = fast;
         screenFrame.classList.toggle('fast', fast);
         audio?.flush();
       }
-      if (!paused) {
+      if (running) {
         emulator.run(elapsed, fast ? FAST_FORWARD_SPEED : 1);
         const samples = emulator.takeAudioSamples();
         // Fast-forwarded sound would pile up faster than it plays, so it is dropped.
@@ -436,6 +454,10 @@ async function main(): Promise<void> {
       screen.present();
       requestAnimationFrame(frame);
     };
+
+    requireElement<HTMLButtonElement>('#toolbar [data-action="change-boot-rom"]').addEventListener('click', () => {
+      void openBootRomSetup();
+    });
 
     applyPalette();
     applyBootRoms();

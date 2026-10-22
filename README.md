@@ -14,7 +14,7 @@ It passes blargg's CPU, instruction timing, memory timing, HALT and Color sound 
 
 ## Console
 
-The toolbar has pause, power cycle and full screen, and two settings:
+The toolbar has pause, power cycle, full screen and the boot ROM panel (see below), and two settings:
 
 - **Console**: the original Game Boy or the Game Boy Color. Auto runs games made for the Color (including those that also run on the original) on a Color, and the rest on an original Game Boy. On a Color, an original Game Boy game is coloured as the Color colours games it doesn't recognise.
 - **Screen**: how the original Game Boy's four shades look: the green of its screen, the greys of the Game Boy Pocket, or the colours a Game Boy Color would give the game.
@@ -25,7 +25,7 @@ Games that save to their cartridge save in the browser by themselves, along with
 
 ## Boot ROMs
 
-The boot ROMs are Nintendo's and still under copyright, so none is included, and none is needed. If you have your own, **Add boot ROM...** (or dropping one onto the page) keeps it in the browser: the Game Boy's is 256 bytes and the Game Boy Color's 2304. With **Start through the boot ROM** ticked, the console starts in it as the real one does, showing the Nintendo logo before the game; the Color's also chooses the colours for original Game Boy games. **Forget** removes them.
+The boot ROMs are Nintendo's and still under copyright, so none is included, and none is needed. If you have your own, the toolbar's **Boot ROM...** button pauses the console and shows the boot ROM panel in place of the screen: **Choose boot ROM file...** (or dropping one onto the page) keeps it in the browser, and the panel shows which you have: the Game Boy's is 256 bytes and the Game Boy Color's 2304. With **Start through the boot ROM** ticked, the console starts in it as the real one does, showing the Nintendo logo before the game; the Color's also chooses the colours for original Game Boy games. **Forget** removes them, and **Back to the console** (or Esc) carries on playing.
 
 ## Cartridges
 

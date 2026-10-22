@@ -14,6 +14,58 @@
         <p class="paused-label">Paused</p>
         <p class="fast-label">Fast forward</p>
         <p class="empty-label">Insert a cartridge to switch on</p>
+        <section id="boot-rom-setup" class="boot-rom-setup" aria-labelledby="boot-rom-setup-title" hidden>
+          <h1 id="boot-rom-setup-title">Game Boy boot ROMs</h1>
+          <p class="boot-rom-setup-lead">
+            None is needed: games start as the boot ROM would leave them. With one, the console starts in it as the
+            real one does, showing the Nintendo logo before the game; the Color's also chooses the colours for original
+            Game Boy games. The boot ROMs are Nintendo's and still under copyright, so none is included: choose or drop
+            your own. They stay in this browser and are never sent anywhere.
+          </p>
+          <ul class="boot-rom-list">
+            <li data-rom="dmg" data-state="missing">
+              <p class="boot-rom-heading"><strong>Game Boy boot ROM</strong> <span class="boot-rom-need">Optional</span></p>
+              <p class="boot-rom-detail">Starts the original Game Boy, and is the Game Boy Pocket's too. Exactly 256 bytes.</p>
+              <p class="boot-rom-names">
+                Often named <code>dmg_boot.bin</code>, <code>dmg_rom.bin</code> or <code>DMG_ROM.bin</code>
+              </p>
+              <p class="boot-rom-status"></p>
+            </li>
+            <li data-rom="cgb" data-state="missing">
+              <p class="boot-rom-heading">
+                <strong>Game Boy Color boot ROM</strong> <span class="boot-rom-need">Optional</span>
+              </p>
+              <p class="boot-rom-detail">
+                Starts the Game Boy Color, and chooses the colours for original Game Boy games. Exactly 2,304 bytes.
+              </p>
+              <p class="boot-rom-names">
+                Often named <code>cgb_boot.bin</code>, <code>gbc_bios.bin</code> or <code>CGB_ROM.bin</code>
+              </p>
+              <p class="boot-rom-status"></p>
+            </li>
+          </ul>
+          <p class="boot-rom-use">
+            <label title="Start through the console's own boot ROM, as the real one does: it shows the Nintendo logo first">
+              <input type="checkbox" name="use-boot-rom" checked /> Start through the boot ROM
+            </label>
+          </p>
+          <p class="boot-rom-tip">
+            The retrobios collection keeps Nintendo's as <code>dmg_rom.bin</code> in its
+            <a href="https://github.com/Abdess/retrobios/tree/main/bios/Nintendo/Game%20Boy" target="_blank" rel="noopener"><code>Game Boy</code></a>
+            folder and <code>gbc_bios.bin</code> in its
+            <a href="https://github.com/Abdess/retrobios/tree/main/bios/Nintendo/Game%20Boy%20Color" target="_blank" rel="noopener"><code>Game Boy Color</code></a>
+            folder.
+          </p>
+          <div class="boot-rom-actions">
+            <button type="button" class="primary" data-action="choose-boot-rom-file">Choose boot ROM file...</button>
+            <button type="button" data-action="forget-boot-roms" hidden>Forget</button>
+            <button type="button" data-action="back">Back to the console</button>
+          </div>
+          <p class="boot-rom-message" role="alert"></p>
+          <p class="boot-rom-storage-note"></p>
+          <p class="boot-rom-drop-hint">Release to load the boot ROM</p>
+          <input type="file" name="boot-rom-file" accept=".bin,.rom,.gb,.gbc,.zip" hidden />
+        </section>
       </div>
 
       <section id="toolbar" class="toolbar" aria-label="Console">
@@ -21,6 +73,9 @@
           <button type="button" data-action="pause" title="P or the Pause key">Pause</button>
           <button type="button" data-action="power" title="Switch the console off and on again">Power cycle</button>
           <button type="button" data-action="fullscreen" title="Esc leaves full screen">Full screen</button>
+          <button type="button" data-action="change-boot-rom" title="Add, check or forget the consoles' boot ROMs; none is needed">
+            Boot ROM...
+          </button>
         </span>
         <span class="toolbar-group">
           <select
@@ -80,31 +135,9 @@
           </p>
           <p class="game-info"></p>
         </div>
-        <p class="boot-rom-row">
-          <label title="Start through the console's own boot ROM, as the real one does: it shows the Nintendo logo first">
-            <input type="checkbox" name="use-boot-rom" checked /> Start through the boot ROM
-          </label>
-          <span class="boot-rom-status">No boot ROM</span>
-          <button
-            type="button"
-            data-action="choose-boot-rom"
-            title="Your own Game Boy (256 bytes) or Game Boy Color (2304 bytes) boot ROM"
-          >
-            Add boot ROM...
-          </button>
-          <button type="button" data-action="forget-boot-roms" hidden>Forget</button>
-        </p>
-        <p class="bios-source">
-          The retrobios collection keeps Nintendo's as <code>dmg_rom.bin</code> in its
-          <a href="https://github.com/Abdess/retrobios/tree/main/bios/Nintendo/Game%20Boy" target="_blank" rel="noopener"><code>Game Boy</code></a>
-          folder and <code>gbc_bios.bin</code> in its
-          <a href="https://github.com/Abdess/retrobios/tree/main/bios/Nintendo/Game%20Boy%20Color" target="_blank" rel="noopener"><code>Game Boy Color</code></a>
-          folder.
-        </p>
         <p class="cart-drop-hint">Release to insert</p>
         <p class="cart-message" role="status"></p>
         <input type="file" name="cart-file" accept=".gb,.gbc,.cgb,.sgb,.bin,.zip,.gbstate,.sav,.srm" hidden />
-        <input type="file" name="boot-rom-file" accept=".bin,.rom,.gb,.gbc,.zip" hidden />
       </section>
 
       <section id="controls" class="controls" aria-label="Controls">

@@ -84,6 +84,179 @@ main {
   display: none;
 }
 
+/* Boot ROM setup: shown in place of the screen while it is open */
+
+body.boot-rom-setup-open #screen,
+body.boot-rom-setup-open .paused-label,
+body.boot-rom-setup-open .fast-label,
+body.boot-rom-setup-open .empty-label,
+body.boot-rom-setup-open .toolbar,
+body.boot-rom-setup-open .cart-panel,
+body.boot-rom-setup-open .controls {
+  display: none !important;
+}
+
+.boot-rom-setup {
+  width: var(--screen-width);
+  min-height: calc(var(--screen-width) / var(--screen-aspect));
+  box-sizing: border-box;
+  padding: 1.5rem 1.75rem;
+  border: 2px dashed var(--accent);
+  border-radius: 10px;
+  background: #1a1a1a;
+  color: #ccc;
+  font-size: 0.9rem;
+}
+
+.boot-rom-setup[hidden] {
+  display: none;
+}
+
+.boot-rom-setup p {
+  margin: 0;
+}
+
+.boot-rom-setup h1 {
+  margin: 0 0 0.5rem;
+  color: #fff;
+  font-size: 1.4rem;
+}
+
+.boot-rom-setup-lead {
+  color: #bbb;
+  line-height: 1.45;
+}
+
+.boot-rom-setup code {
+  padding: 0.05rem 0.3rem;
+  border-radius: 4px;
+  background: #2a2a2a;
+  color: #fff;
+  font-size: 0.85em;
+}
+
+.boot-rom-list {
+  display: grid;
+  gap: 0.6rem;
+  margin: 1rem 0;
+  padding: 0;
+  list-style: none;
+}
+
+.boot-rom-list li {
+  display: grid;
+  gap: 0.25rem;
+  padding: 0.65rem 0.85rem;
+  border: 1px solid #3d3d3d;
+  border-left: 4px solid #c9a227;
+  border-radius: 6px;
+  background: #202020;
+}
+
+.boot-rom-list li[data-state='loaded'] {
+  border-left-color: #9ad284;
+}
+
+.boot-rom-heading strong {
+  color: #eee;
+  font-size: 1rem;
+}
+
+.boot-rom-need {
+  margin-left: 0.4rem;
+  padding: 0.05rem 0.4rem;
+  border-radius: 4px;
+  background: #3d3524;
+  color: #c9a227;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.boot-rom-detail,
+.boot-rom-names,
+.boot-rom-tip {
+  color: #aaa;
+  font-size: 0.85rem;
+}
+
+.boot-rom-status {
+  color: #c9a227;
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+.boot-rom-list li[data-state='loaded'] .boot-rom-status {
+  color: #9ad284;
+}
+
+.boot-rom-use label {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.boot-rom-tip {
+  margin-top: 0.5rem !important;
+}
+
+.boot-rom-tip a {
+  color: var(--accent-soft);
+}
+
+.boot-rom-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 1rem;
+}
+
+.boot-rom-setup button {
+  padding: 0.5rem 1.1rem;
+  font: inherit;
+}
+
+.boot-rom-setup button.primary {
+  border-color: var(--accent);
+  background: #4d1a33;
+  color: #fff;
+}
+
+.boot-rom-message:not(:empty) {
+  margin-top: 0.75rem !important;
+  color: #ff8a80;
+}
+
+.boot-rom-message.warning {
+  color: #c9a227;
+}
+
+.boot-rom-storage-note:not(:empty) {
+  margin-top: 0.75rem !important;
+  color: #c9a227;
+}
+
+.boot-rom-drop-hint {
+  display: none;
+  padding: 2rem 0;
+  color: #fff;
+  font-size: 1.2rem;
+  text-align: center;
+}
+
+.boot-rom-setup.drag-over {
+  border-style: solid;
+  background: #2a1a22;
+}
+
+.boot-rom-setup.drag-over > :not(.boot-rom-drop-hint) {
+  display: none;
+}
+
+.boot-rom-setup.drag-over .boot-rom-drop-hint {
+  display: block;
+}
+
 #status {
   margin: 0;
   font-size: 0.85rem;
@@ -292,38 +465,6 @@ input[type='range'] {
   margin-top: 0.75rem !important;
   font-size: 0.85rem;
   color: #aaa;
-}
-
-.boot-rom-row {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  align-items: center;
-  gap: 0.4rem 0.75rem;
-  margin-top: 0.75rem !important;
-  font-size: 0.85rem;
-  color: #aaa;
-}
-
-.boot-rom-row label {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.4rem;
-}
-
-.bios-source {
-  margin-top: 0.4rem !important;
-  font-size: 0.8rem;
-  color: #999;
-  text-align: center;
-}
-
-.bios-source a {
-  color: var(--accent-soft);
-}
-
-.boot-rom-status {
-  color: #888;
 }
 
 .game-info {
