@@ -92,7 +92,8 @@ body.boot-rom-setup-open .fast-label,
 body.boot-rom-setup-open .empty-label,
 body.boot-rom-setup-open .toolbar,
 body.boot-rom-setup-open .cart-panel,
-body.boot-rom-setup-open .controls {
+body.boot-rom-setup-open .controls,
+body.boot-rom-setup-open .pad {
   display: none !important;
 }
 
@@ -534,7 +535,7 @@ input[type='range'] {
   flex-direction: column;
   align-items: center;
   gap: 1rem;
-  margin: 0.75rem auto 0;
+  margin: 0 auto;
   padding: 1rem 1.4rem 2rem;
   max-width: 24rem;
   border-radius: 10px 10px 40px 10px;
@@ -642,4 +643,14 @@ input[type='range'] {
   color: #777;
   font-size: 0.8rem;
   text-align: center;
+}
+
+@media (max-width: 900px) {
+  main {
+    justify-content: flex-start;
+  }
+
+  body:has(.pad:not([hidden])) {
+    --screen-width: min(96vw, calc((100dvh - 17rem) * var(--screen-aspect)));
+  }
 }
